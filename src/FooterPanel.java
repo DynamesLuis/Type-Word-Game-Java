@@ -5,8 +5,9 @@ import java.awt.*;
 public class FooterPanel extends JPanel {
     Color backgroundColor = Color.white;
 
+
     public FooterPanel() {
-        JLabel typedWord = new JLabel("Jjava", SwingConstants.CENTER);
+        JLabel typedWord = new JLabel("Java", SwingConstants.CENTER);
         JLabel score = new JLabel("Score: 0");
         typedWord.setFont(new Font("Arial", Font.BOLD, 22));
         score.setFont(new Font("Arial", Font.BOLD, 16));

@@ -7,7 +7,7 @@ public class Word {
     int x;
     int y;
     int ySpeed;
-    boolean isCorrectlyTyped = false;
+    public boolean isCorrectlyTyped = false;
 
     public Word(String name, int x, int y, int ySpeed) {
         this.name = name;
@@ -16,13 +16,8 @@ public class Word {
         this.ySpeed = ySpeed;
     }
 
-    public JLabel getLabel() {
-        return this.label;
-    }
-
     public void move() {
        y += ySpeed;
-       //label.setLocation(150, y);
     }
 
     public void checkIsEqual(String wordTyped) {
@@ -30,6 +25,7 @@ public class Word {
             if (wordTyped.equals(name)) {
                 System.out.println("equals");
                 isCorrectlyTyped = true;
+                GamePanel.resetWord();
             }
         }
     }

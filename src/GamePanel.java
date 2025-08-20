@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GamePanel extends JPanel implements ActionListener {
     Color backgroundColor = Color.black;
@@ -29,8 +32,15 @@ public class GamePanel extends JPanel implements ActionListener {
         isRunning = true;
         gameStarted = true;
         System.out.println("game running");
-        Word newWord = wordGenerator.generateWord();
-        words.add(newWord);
+
+        ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+        exec.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                Word newWord = wordGenerator.generateWord();
+                wordGenerator.addWord(newWord);
+            }
+        }, 0, 4, TimeUnit.SECONDS);
     }
 
     public void gameOver(Graphics g) {
@@ -40,15 +50,16 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawString("Game Over", (GameWindow.widthWindow - metrics2.stringWidth("Game Over"))/2, GameWindow.heightWindow/2);
     }
 
-    public void resetWord() {
+    static public void resetWord() {
         currentWordTyped = "";
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if (isRunning) {
-            for (Word word: words) {
+            for (Word word: WordGenerator.currentWords) {
                 word.draw(g);
             }
         } else if (!isRunning && gameStarted){
@@ -59,8 +70,8 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (isRunning) {
-            for (Word word: words) {
-                word.move();
+            for (Word word: WordGenerator.currentWords) {
+                if (!word.isCorrectlyTyped) word.move();
                 word.checkIsEqual(currentWordTyped);
                 boolean isGone = word.checkIfGone();
                 if (isGone) isRunning = false;

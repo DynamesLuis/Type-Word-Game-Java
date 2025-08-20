@@ -11,6 +11,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static String currentWordTyped = "";
     Timer timer;
     boolean isRunning = false;
+    boolean gameStarted = false;
     WordGenerator wordGenerator;
     ArrayList<Word> words = new ArrayList<>();
 
@@ -26,9 +27,17 @@ public class GamePanel extends JPanel implements ActionListener {
         timer = new Timer(10, this);
         timer.start();
         isRunning = true;
+        gameStarted = true;
         System.out.println("game running");
         Word newWord = wordGenerator.generateWord();
         words.add(newWord);
+    }
+
+    public void gameOver(Graphics g) {
+        g.setColor(Color.red);
+        g.setFont(new Font("ink Free", Font.BOLD, 75));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Game Over", (GameWindow.widthWindow - metrics2.stringWidth("Game Over"))/2, GameWindow.heightWindow/2);
     }
 
     public void resetWord() {
@@ -42,6 +51,8 @@ public class GamePanel extends JPanel implements ActionListener {
             for (Word word: words) {
                 word.draw(g);
             }
+        } else if (!isRunning && gameStarted){
+            gameOver(g);
         }
     }
 
@@ -51,6 +62,8 @@ public class GamePanel extends JPanel implements ActionListener {
             for (Word word: words) {
                 word.move();
                 word.checkIsEqual(currentWordTyped);
+                boolean isGone = word.checkIfGone();
+                if (isGone) isRunning = false;
             }
         }
         repaint();

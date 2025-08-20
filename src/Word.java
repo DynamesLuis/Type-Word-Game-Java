@@ -42,4 +42,9 @@ public class Word {
         }
     }
 
+    public boolean checkIfGone() {
+        if (y > GameWindow.heightWindow) System.out.println("it's gone");
+        return y > GameWindow.heightWindow;
+    }
+
 }

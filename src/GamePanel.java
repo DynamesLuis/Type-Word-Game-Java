@@ -88,6 +88,7 @@ public class GamePanel extends JPanel implements ActionListener {
             } else {
                 currentWordTyped += e.getKeyChar();
                 System.out.println(currentWordTyped);
+                FooterPanel.updateInput();
             }
         }
     }

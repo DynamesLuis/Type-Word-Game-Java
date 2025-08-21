@@ -26,6 +26,8 @@ public class Word {
                 System.out.println("equals");
                 isCorrectlyTyped = true;
                 GamePanel.resetWord();
+                FooterPanel.updateInput();
+                FooterPanel.updateScore();
             }
         }
     }

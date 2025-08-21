@@ -4,11 +4,13 @@ import java.awt.*;
 
 public class FooterPanel extends JPanel {
     Color backgroundColor = Color.white;
-
+    static int points;
+    static JLabel typedWord = new JLabel("", SwingConstants.CENTER);
+    static JLabel score = new JLabel("Score: 0");
 
     public FooterPanel() {
-        JLabel typedWord = new JLabel("Java", SwingConstants.CENTER);
-        JLabel score = new JLabel("Score: 0");
+        typedWord = new JLabel("", SwingConstants.CENTER);
+        score = new JLabel("Score: 0");
         typedWord.setFont(new Font("Arial", Font.BOLD, 22));
         score.setFont(new Font("Arial", Font.BOLD, 16));
         score.setBorder(new EmptyBorder(0, 0, 0, 10));
@@ -17,5 +19,14 @@ public class FooterPanel extends JPanel {
         this.setBackground(backgroundColor);
         this.add(typedWord, BorderLayout.CENTER);
         this.add(score, BorderLayout.EAST);
+    }
+
+    static public void updateScore() {
+        points ++;
+        score.setText("Score: " + points);
+    }
+
+    static public void updateInput() {
+        typedWord.setText(GamePanel.currentWordTyped);
     }
 }

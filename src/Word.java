@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Word {
-    JLabel label;
     String name;
     int x;
     int y;

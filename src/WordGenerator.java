@@ -14,7 +14,7 @@ public class WordGenerator {
    }
 
     public int generateX() {
-        return (int)(Math.random() * GameWindow.widthWindow );
+        return (int)(Math.random() * (GameWindow.widthWindow - 150) );
     }
 
     public void addWord(Word newWord) {
